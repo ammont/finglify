@@ -1,0 +1,15 @@
+{
+    "name": "amir/finglify",
+    "description": "Translates farsi/persian to finglish/pinglish.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amir Montazer",
+            "email": "ammontazer@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+
+    }
+}
