@@ -20,12 +20,14 @@ namespace Ammont\Finglify;
  */
 class Finglify {
 
-    private $words_file_path = __DIR__ . '../resources/words.json';
+    private $words_file_path;
     /** @var array */
     private $rules;
 
     public function __construct()
     {
+        $this->words_file_path = __DIR__ . '../resources/words.json';
+
         $this->rules[0] = array(
                 'ای' => 'i',
                 'او' => 'oo',
