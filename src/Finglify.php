@@ -20,6 +20,7 @@ namespace Ammont\Finglify;
  */
 class Finglify {
 
+    private $words_file_path = __DIR__ . '../resources/words.json';
     /** @var array */
     private $rules;
 
@@ -81,12 +82,23 @@ class Finglify {
 
     public function translate($string)
     {
+        $words = $this->parseWordsFromFile();
+
+        $string = strtr($string, $words);
+
         foreach ($this->rules as $rule)
         {
             $string = strtr($string, $rule);
         }
 
         return $string;
+    }
+
+    public function parseWordsFromFile()
+    {
+        $words = file_get_contents($this->words_file_path);
+
+        return json_decode($words, true);
     }
 
     public static function create()
