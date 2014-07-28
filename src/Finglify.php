@@ -26,7 +26,7 @@ class Finglify {
 
     public function __construct()
     {
-        $this->words_file_path = __DIR__ . '../resources/words.json';
+        $this->words_file_path = __DIR__ . '/../resources/words.json';
 
         $this->rules[0] = array(
                 'ای' => 'i',
