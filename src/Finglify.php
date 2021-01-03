@@ -20,13 +20,23 @@ namespace Ammont\Finglify;
  */
 class Finglify {
 
+    private static $instance;
+
     private $words_file_path;
+    
+    private $words;
+
     /** @var array */
     private $rules;
 
     public function __construct()
     {
+        if(self::$instance) {
+            return self::$instance;
+        }
+        
         $this->words_file_path = __DIR__ . '/../resources/words.json';
+        $this->words = $this->parseWordsFromFile();
 
         $this->rules[0] = array(
                 'ای' => 'i',
@@ -86,9 +96,11 @@ class Finglify {
 
     public function translate($string)
     {
-        $words = $this->parseWordsFromFile();
+        $translate = strtr($string, $this->words);
 
-        $string = strtr($string, $words);
+        if($translate == "") {
+            $translate = $string;
+        }
 
         foreach ($this->rules as $rule)
         {
@@ -107,11 +119,26 @@ class Finglify {
 
     public static function create()
     {
-        return new static;
+        if(!self::$instance) {
+            self::$instance = new static;
+        }
+        return self::$instance;
     }
 
     public static function trans($string)
     {
         return static::create()->translate($string);
+    }
+
+    public static function sentence($sentence_string)
+    {
+        $words = preg_split("/[\s,\.]+/", $sentence_string);
+        $translate = "";
+        foreach($words as $word) {
+            $translate .= static::trans($word);
+            $translate .= " ";
+        }
+
+        return trim($translate);
     }
 }
